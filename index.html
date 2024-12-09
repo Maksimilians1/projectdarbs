@@ -1,1 +1,184 @@
 <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инженерный калькулятор</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .calculator {
+            background: linear-gradient(135deg, #5c6bc0, #7986cb);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 380px;
+            padding: 30px;
+        }
+
+        .display {
+            width: 100%;
+            height: 60px;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 2em;
+            text-align: right;
+            color: #333;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .buttons button {
+            padding: 20px;
+            font-size: 1.5em;
+            background-color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .buttons button:hover {
+            background-color: #ff9f80;
+        }
+
+        .buttons button:active {
+            transform: scale(0.95);
+        }
+
+        .buttons .equal {
+            background-color: #5c6bc0;
+            color: white;
+            grid-column: span 2;
+        }
+
+        .buttons .equal:hover {
+            background-color: #3f51b5;
+        }
+
+        .buttons .clear {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .buttons .clear:hover {
+            background-color: #ff2a2a;
+        }
+
+        .buttons .operator {
+            background-color: #f1f1f1;
+        }
+
+        .buttons .operator:hover {
+            background-color: #f0e5e5;
+        }
+
+        .buttons .number {
+            background-color: #e0e0e0;
+        }
+
+        .buttons .number:hover {
+            background-color: #cfcfcf;
+        }
+
+        .buttons .scientific {
+            background-color: #c5cae9;
+        }
+
+        .buttons .scientific:hover {
+            background-color: #9fa8da;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <!-- Дисплей калькулятора -->
+        <input type="text" id="display" class="display" disabled>
+
+        <!-- Кнопки калькулятора -->
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="clear">C</button>
+            <button onclick="appendToDisplay('(')" class="operator">(</button>
+            <button onclick="appendToDisplay(')')" class="operator">)</button>
+            <button onclick="appendToDisplay('%')" class="operator">%</button>
+
+            <button onclick="appendToDisplay('7')" class="number">7</button>
+            <button onclick="appendToDisplay('8')" class="number">8</button>
+            <button onclick="appendToDisplay('9')" class="number">9</button>
+            <button onclick="appendToDisplay('/')" class="operator">/</button>
+
+            <button onclick="appendToDisplay('4')" class="number">4</button>
+            <button onclick="appendToDisplay('5')" class="number">5</button>
+            <button onclick="appendToDisplay('6')" class="number">6</button>
+            <button onclick="appendToDisplay('*')" class="operator">*</button>
+
+            <button onclick="appendToDisplay('1')" class="number">1</button>
+            <button onclick="appendToDisplay('2')" class="number">2</button>
+            <button onclick="appendToDisplay('3')" class="number">3</button>
+            <button onclick="appendToDisplay('-')" class="operator">-</button>
+
+            <button onclick="appendToDisplay('0')" class="number">0</button>
+            <button onclick="appendToDisplay('.')" class="number">.</button>
+            <button onclick="calculateResult()" class="equal">=</button>
+            <button onclick="appendToDisplay('+')" class="operator">+</button>
+
+            <!-- Научные операции -->
+            <button onclick="appendToDisplay('Math.sin(')" class="scientific">sin</button>
+            <button onclick="appendToDisplay('Math.cos(')" class="scientific">cos</button>
+            <button onclick="appendToDisplay('Math.tan(')" class="scientific">tan</button>
+            <button onclick="appendToDisplay('Math.log(')" class="scientific">log</button>
+
+            <button onclick="appendToDisplay('Math.sqrt(')" class="scientific">√</button>
+            <button onclick="appendToDisplay('Math.pow(')" class="scientific">x²</button>
+            <button onclick="appendToDisplay('Math.PI')" class="scientific">π</button>
+            <button onclick="appendToDisplay('Math.E')" class="scientific">e</button>
+        </div>
+    </div>
+
+    <script>
+        // Функция для добавления символа в дисплей
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        // Функция для очистки дисплея
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        // Функция для вычисления результата
+        function calculateResult() {
+            const display = document.getElementById('display');
+            try {
+                // Используем eval для вычисления выражения с учетом математических операций
+                display.value = eval(display.value);
+            } catch (e) {
+                // Если произошла ошибка, показываем ошибку
+                display.value = 'Ошибка';
+            }
+        }
+    </script>
+
+</body>
+</html>
